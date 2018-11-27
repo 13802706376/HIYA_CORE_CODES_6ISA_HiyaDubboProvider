@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd"
+        >
+                    
+    <dubbo:application name="HiyaDubboProvider"   owner="Czj" organization="Hiya"/>
+
+    <dubbo:registry address="zookeeper://10.10.51.77:2181"/>
+
+
+    <dubbo:annotation package="com.alibaba.dubbo.demo.user.facade" />
+    
+   <dubbo:protocol name="dubbo" serialization="kryo"   port="20880" />
+
+   <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500" />
+    <dubbo:protocol name="http" port="8889"/>
+    <dubbo:protocol name="hessian" port="8890"/>
+    <dubbo:protocol name="webservice" port="8892"/>
+    
+    <dubbo:service interface="com.hiya.dubbo.product.IProduct" ref="productService"   protocol="dubbo"/>
+    <dubbo:service interface="com.hiya.dubbo.product.IProductRest1" ref="productRest1Service"   protocol="dubbo"/>
+    <dubbo:service interface="com.hiya.dubbo.product.IProductRest2" ref="productRest2Service"   protocol="dubbo"/>
+
+     <bean id="productService" class="com.hiya.serviceImpl.ProductService" />
+     <bean id="productRest1Service" class="com.hiya.serviceImpl.ProductRest1Service" />
+     <bean id="productRest2Service" class="com.hiya.serviceImpl.ProductRest2Service" />
+</beans>
